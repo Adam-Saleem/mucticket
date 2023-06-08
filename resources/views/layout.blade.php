@@ -12,9 +12,11 @@
             flex-direction: column;
             min-height: 100vh;
         }
+
         .content {
             flex: 1;
         }
+
         .footer {
             padding: 20px 0;
             background-color: #f8f9fa;
@@ -29,16 +31,19 @@
 <header class="bg-dark py-3">
     <div class="container d-flex justify-content-between align-items-center">
         <div>
-        <a class="navbar-brand text-light" href="{{ url('/dashboard') }}">MUC Ticket</a>
+            <a class="navbar-brand text-light" href="{{ url('/dashboard') }}">MUC Ticket</a>
         </div>
         <div class="text-center w-100">
             @yield('header')
         </div>
         <div>
+            @php($user = \Illuminate\Support\Facades\Auth::user())
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-            <button type="submit" form="logout-form" class="btn btn-dark btn-lg btn-block text-light">Logout</button>
+            <button type="submit" form="logout-form" class="btn btn-dark btn-l btn-block text-light">{{$user->name}}
+                | Logout
+            </button>
         </div>
     </div>
 </header>

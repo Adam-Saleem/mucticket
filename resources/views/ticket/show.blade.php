@@ -3,6 +3,7 @@
     @include('header')
 @endsection
 @section('contact')
+    @php($user = \Illuminate\Support\Facades\Auth::user())
     <div class="content">
         <div class="card text-center">
             <div class="card-header">
@@ -16,51 +17,55 @@
                 <br>
                 <h6 class="text-muted">Status: {{$ticket->status}} </h6>
                 <h6 class="text-muted">Created by User: {{$ticket->user->name}} </h6>
-                <div class="d-flex justify-content-end">
-                    @if($ticket->status == 'Open')
-                        <form method="POST" action="{{ url("tickets/{$ticket->id}/in_process") }}">
-                            {{ csrf_field() }}
-                            <div class="m-2 text-right">
-                                <button type="submit" class="btn btn-warning">In Process</button>
-                            </div>
-                        </form>
-                        <form method="POST" action="{{ url("tickets/{$ticket->id}/close") }}">
-                            {{ csrf_field() }}
-                            <div class="m-2 text-right">
-                                <button type="submit" class="btn btn-success">Closed</button>
-                            </div>
-                        </form>
-                    @elseif($ticket->status == 'InProcess')
-                        <form method="POST" action="{{ url("tickets/{$ticket->id}/open") }}">
-                            {{ csrf_field() }}
-                            <div class="m-2 text-right">
-                                <button type="submit" class="btn btn-dark">Open</button>
-                            </div>
-                        </form>
-                        <form method="POST" action="{{ url("tickets/{$ticket->id}/close") }}">
-                            {{ csrf_field() }}
-                            <div class="m-2 text-right">
-                                <button type="submit" class="btn btn-success">Closed</button>
-                            </div>
-                        </form>
-                    @elseif($ticket->status == 'Close')
-                        <form method="POST" action="{{ url("tickets/{$ticket->id}/open") }}">
-                            {{ csrf_field() }}
-                            <div class="m-2 text-right">
-                                <button type="submit" class="btn btn-dark">Open</button>
-                            </div>
-                        </form>
-                        <form method="POST" action="{{ url("tickets/{$ticket->id}/in_process") }}">
-                            {{ csrf_field() }}
-                            <div class="m-2 text-right">
-                                <button type="submit" class="btn btn-warning">In Process</button>
-                            </div>
-                        </form>
-                    @endif
-                </div>
+                @if($user->is_admin)
+                    <div class="d-flex justify-content-end">
+                        @if($ticket->status == 'Open')
+                            <form method="POST" action="{{ url("tickets/{$ticket->id}/in_process") }}">
+                                {{ csrf_field() }}
+                                <div class="m-2 text-right">
+                                    <button type="submit" class="btn btn-warning">In Process</button>
+                                </div>
+                            </form>
+                            <form method="POST" action="{{ url("tickets/{$ticket->id}/close") }}">
+                                {{ csrf_field() }}
+                                <div class="m-2 text-right">
+                                    <button type="submit" class="btn btn-success">Closed</button>
+                                </div>
+                            </form>
+                        @elseif($ticket->status == 'InProcess')
+                            <form method="POST" action="{{ url("tickets/{$ticket->id}/open") }}">
+                                {{ csrf_field() }}
+                                <div class="m-2 text-right">
+                                    <button type="submit" class="btn btn-dark">Open</button>
+                                </div>
+                            </form>
+                            <form method="POST" action="{{ url("tickets/{$ticket->id}/close") }}">
+                                {{ csrf_field() }}
+                                <div class="m-2 text-right">
+                                    <button type="submit" class="btn btn-success">Closed</button>
+                                </div>
+                            </form>
+                        @elseif($ticket->status == 'Close')
+                            <form method="POST" action="{{ url("tickets/{$ticket->id}/open") }}">
+                                {{ csrf_field() }}
+                                <div class="m-2 text-right">
+                                    <button type="submit" class="btn btn-dark">Open</button>
+                                </div>
+                            </form>
+                            <form method="POST" action="{{ url("tickets/{$ticket->id}/in_process") }}">
+                                {{ csrf_field() }}
+                                <div class="m-2 text-right">
+                                    <button type="submit" class="btn btn-warning">In Process</button>
+                                </div>
+                            </form>
+                        @endif
+                    </div>
+                @endif
+                <a class="text-primary" href="{{  url("tickets/$ticket->id/edit")}}">Edit</a>
             </div>
             <div class="card-footer text-muted">
-                {{ $ticket->closed_at?"Closed: ". \Carbon\Carbon::parse($ticket->closed_at)->diffForHumans():'Not Closed' }}
+                <h6>{{ $ticket->created_at?"Created: ". \Carbon\Carbon::parse($ticket->created_at)->diffForHumans():'' }}</h6>
+                <h6>{{ $ticket->closed_at?"Closed: ". \Carbon\Carbon::parse($ticket->closed_at)->diffForHumans():'Not Closed' }}</h6>
             </div>
         </div>
     </div>

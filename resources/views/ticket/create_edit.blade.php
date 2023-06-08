@@ -107,7 +107,7 @@
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <div class="mb-3 text-right">
-                                        <button type="submit" class="btn btn-danger">Delete recorde</button>
+                                        <button type="submit" class="btn btn-danger">Delete Ticket</button>
                                     </div>
                                 </form>
                 @endif

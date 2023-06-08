@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             'password' => '123456'
         ]);
         User::create([
-            'name'=>'MUC Client',
-            'username'=>'client',
+            'name'=>'MUC Employee',
+            'username'=>'employee',
             'is_admin' => 0,
             'password' => '123456'
         ]);

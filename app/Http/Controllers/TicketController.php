@@ -15,7 +15,15 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::simplePaginate(15);
+        $user = \Illuminate\Support\Facades\Auth::user();
+        if ($user->is_admin){
+            $tickets = Ticket::simplePaginate(15);
+        }else{
+            $tickets = Ticket::query()
+                ->where('user_id','=',$user->id)
+                ->simplePaginate(15);
+        }
+
         return view('ticket.index', compact('tickets'));
     }
     /**
@@ -23,7 +31,17 @@ class TicketController extends Controller
      */
     public function history()
     {
-        $tickets = Ticket::query()->where('status','=','Close')->simplePaginate(15);
+        $user = \Illuminate\Support\Facades\Auth::user();
+        if ($user->is_admin){
+            $tickets = Ticket::query()
+                ->where('status','=','Close')
+                ->simplePaginate(15);
+        }else{
+            $tickets = Ticket::query()
+                ->where('status','=','Close')
+                ->where('user_id','=',$user->id)
+                ->simplePaginate(15);
+        }
         return view('ticket.index', compact('tickets'));
     }
     /**
@@ -31,7 +49,17 @@ class TicketController extends Controller
      */
     public function inProcess()
     {
-        $tickets = Ticket::query()->where('status','=','InProcess')->simplePaginate(15);
+        $user = \Illuminate\Support\Facades\Auth::user();
+        if ($user->is_admin){
+            $tickets = Ticket::query()
+                ->where('status','=','InProcess')
+                ->simplePaginate(15);
+        }else{
+            $tickets = Ticket::query()
+                ->where('status','=','InProcess')
+                ->where('user_id','=',$user->id)
+                ->simplePaginate(15);
+        }
         return view('ticket.index', compact('tickets'));
     }
 
@@ -41,7 +69,7 @@ class TicketController extends Controller
     public function store(StoreTicketRequest $request)
     {
         $user = Auth::user();
-        Ticket::create([
+        $ticket = Ticket::create([
             'floor' => $request->floor,
             'room' => $request->room,
             'device' => $request->device,
@@ -51,7 +79,7 @@ class TicketController extends Controller
             'priority' => $request->priority,
             'user_id' => $user->id,
         ]);
-        return redirect('/tickets');
+        return redirect("/tickets/$ticket->id");
     }
 
     /**
