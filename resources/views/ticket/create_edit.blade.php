@@ -1,6 +1,6 @@
 @extends('Layout')
 @section('header')
-        @include('header')
+    @include('header')
 @endsection
 @section('contact')
     <div class="content">
@@ -49,8 +49,6 @@
                                             @if($ticket->device)
                                                 <option class="text-secondary" value="{{$ticket->device}}"
                                                         disabled selected>{{$ticket->device}}</option>
-                                            @else
-                                                <option class="text-secondary" disabled selected>Device</option>
                                             @endif
                                             <option value="Computer">Computer</option>
                                             <option value="Printer">Printer</option>
@@ -66,8 +64,6 @@
                                             @if($ticket->type)
                                                 <option class="text-secondary" value="{{$ticket->type}}"
                                                         disabled selected>{{$ticket->type}}</option>
-                                            @else
-                                                <option class="text-secondary" disabled selected>Type</option>
                                             @endif
                                             <option value="Hardware">Hardware</option>
                                             <option value="Software">Software</option>
@@ -77,7 +73,7 @@
                                 <div class="mb-3">
                                     <label for="description" class="form-label">Description</label>
                                     <textarea type="text" class="form-control" id="description"
-                                              name="description">{{ $ticket->exists?$ticket->description:old('description') }}</textarea>
+                                              name="description" required>{{ $ticket->exists?$ticket->description:old('description') }}</textarea>
                                 </div>
                                 <div class="mb-3 w-50">
                                     <label for="priority" class="form-label">Priority</label>
@@ -86,12 +82,10 @@
                                         @if($ticket->priority)
                                             <option class="text-secondary" value="{{$ticket->priority}}"
                                                     disabled selected>{{$ticket->priority}}</option>
-                                        @else
-                                            <option class="text-secondary" disabled selected>Priority</option>
                                         @endif
-                                        <option value="High">High</option>
-                                        <option value="Medium">Medium</option>
                                         <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
                                     </select>
                                 </div>
                                 <div class="mb-3 text-right">

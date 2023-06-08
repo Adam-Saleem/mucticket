@@ -11,8 +11,7 @@
             </div>
             <div class="card-body">
                 <h3 class="card-title">Divece: {{$ticket->device}}, {{ $ticket->type }}</h3>
-                <h6 class="text-muted">Floor: {{ $ticket->floor }}, Room: {{ $ticket->room }}
-                    , {{$ticket->device_number?"Device Number: ".$ticket->device_number:'' }} </h6>
+                <h6 class="text-muted">Floor: {{ $ticket->floor }}, Room: {{ $ticket->room }}{{$ticket->device_number?", Device Number: ".$ticket->device_number:'' }} </h6>
                 <h4 class="card-text">{{$ticket->description}}</h4>
                 <br>
                 <h6 class="text-muted">Status: {{$ticket->status}} </h6>
