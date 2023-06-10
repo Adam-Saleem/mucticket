@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
     use HasFactory;
+    /**
+     * @var string[]
+     */
     protected $guarded = ['id'];
 
     public function user(){

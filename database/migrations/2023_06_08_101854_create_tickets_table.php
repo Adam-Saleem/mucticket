@@ -14,7 +14,6 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('new_id')->default(200)->change();
             $table->integer('floor');
             $table->integer('room');
             $table->string('device');
